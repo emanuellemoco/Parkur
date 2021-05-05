@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 
 public class PlayerController : MonoBehaviour
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
    float cameraRotation;
    float _baseSpeed = 10.0f;
    float _gravidade = 4.0f; 
+   float maxSpeed = 3f;
    
    float y = 0;
    float x = 0;
@@ -35,6 +37,10 @@ public class PlayerController : MonoBehaviour
    
    void Start()
    {
+       
+       
+       Cursor.lockState = CursorLockMode.Locked;
+
        
         characterController = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Main Camera");
@@ -81,8 +87,10 @@ public class PlayerController : MonoBehaviour
 
             else
                 y -= _gravidade * Time.deltaTime;
-            
-       
+        
+        //if (Math.Abs(x) > maxSpeed)
+         //   (x > 0) ? (x = maxSpeed) : (x = -maxSpeed) ; 
+
         Vector3 direction = transform.right * x + transform.up * y + transform.forward * z;
 
 
