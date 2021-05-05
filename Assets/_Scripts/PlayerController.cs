@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
                 isFirstTime = false;
                 y = 0;} 
             if (Input.GetKeyDown(KeyCode.Space)){
-                y += 2*jump/3;
+                y += jump;
 
                 if (isWallLeft)
                     x += horizontalJump;
