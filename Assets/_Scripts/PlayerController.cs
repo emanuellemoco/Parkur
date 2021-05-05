@@ -14,12 +14,13 @@ public class PlayerController : MonoBehaviour
    float cameraRotation;
    float _baseSpeed = 10.0f;
    float _gravidade = 4.0f; 
-   float maxSpeed = 3f;
+   float maxSpeed = 1f;
+
    
    float y = 0;
    float x = 0;
 
-   private float horizontalJump = 7f;
+   public float horizontalJump = 12f;
 
 
    private float jump = 1.4f;
@@ -29,11 +30,7 @@ public class PlayerController : MonoBehaviour
    public LayerMask isWall;
 
 
-   private bool isWallRight, isWallLeft;
-   
-   private float timeWall = 0.0f;
-
-   public float wallLimit = 2.0f;
+   private bool isWallRight, isWallLeft, isFirstTime;
    
    void Start()
    {
@@ -54,6 +51,10 @@ public class PlayerController : MonoBehaviour
    {
         x  /= 1.5f;
         x += Input.GetAxis("Horizontal");
+        
+        if (Math.Abs(x) > maxSpeed)
+            x = (x > 0) ? (maxSpeed) : (-maxSpeed) ; 
+        
         float z = Input.GetAxis("Vertical");
 
         //Tratando movimentação do mouse
@@ -70,26 +71,30 @@ public class PlayerController : MonoBehaviour
             y = -_gravidade * Time.deltaTime;
             if (Input.GetKeyDown(KeyCode.Space))
                 y = jump;
+                isFirstTime = true;
             }
         else if (isWallLeft || isWallRight){
-                //y -= _gravidade/20.0f * Time.deltaTime;
-                y = 0;   
-                if (Input.GetKeyDown(KeyCode.Space)){
-                    y = 2*jump/3;
+            if (!isFirstTime)
+                y -= _gravidade/50 * Time.deltaTime;
+            else{
+                isFirstTime = false;
+                y = 0;} 
+            if (Input.GetKeyDown(KeyCode.Space)){
+                y += 2*jump/3;
 
-                    if (isWallLeft)
-                        x += horizontalJump;
-                    else 
-                        x -= horizontalJump;
-                }
+                if (isWallLeft)
+                    x += horizontalJump;
+                else 
+                    x -= horizontalJump;
+            }
         }
             
 
-            else
-                y -= _gravidade * Time.deltaTime;
+            else {
+                isFirstTime = true;
+                y -= _gravidade * Time.deltaTime;}
         
-        //if (Math.Abs(x) > maxSpeed)
-         //   (x > 0) ? (x = maxSpeed) : (x = -maxSpeed) ; 
+
 
         Vector3 direction = transform.right * x + transform.up * y + transform.forward * z;
 
@@ -105,8 +110,6 @@ public class PlayerController : MonoBehaviour
    {
         isWallRight = Physics.Raycast(transform.position, transform.right, 1.2f, isWall);
         isWallLeft = Physics.Raycast(transform.position, -transform.right, 1.2f, isWall);
-        Debug.Log(isWallLeft);
-        Debug.Log(isWallRight);
         Running();
    }
 

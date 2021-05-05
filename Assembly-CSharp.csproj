@@ -55,7 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\_Scripts\Loader.cs" />
      <Compile Include="Assets\_Scripts\PlayerController.cs" />
+     <Compile Include="Assets\_Scripts\UI\UI_Menu.cs" />
      <None Include="Assets\FSP\Platformer\Skybox Shaders\RGBM Cubed Skybox.shader" />
      <None Include="Assets\FSP\Platformer\Skybox Shaders\Horizontal Skybox.shader" />
      <None Include="Assets\FSP\Platformer\Skybox Shaders\Horizon With Sun Skybox.shader" />
