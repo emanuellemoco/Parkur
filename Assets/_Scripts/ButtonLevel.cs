@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class ButtonLevel : MonoBehaviour
 {
+
+    public GameObject player;
     // Start is called before the first frame update
+
     void Start()
     {
         
@@ -18,7 +21,9 @@ public class ButtonLevel : MonoBehaviour
 
     void OnMouseDown(){
         Debug.Log("uwu");
-        Destroy (this.gameObject); 
+        // Destroy (this.gameObject);
+        if (Vector3.Distance(this.transform.position,player.transform.position) < 4) 
+          Loader.Load(Loader.Scene.Level2);
   } 
 }
  

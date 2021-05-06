@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
+
 
 
 public class PlayerController : MonoBehaviour
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
    float _baseSpeed = 10.0f;
    float _gravidade = 4.0f; 
    float maxSpeed = 1f;
+   public Text tip;
 
    
    float y = 0;
@@ -31,19 +34,18 @@ public class PlayerController : MonoBehaviour
 
 
    private bool isWallRight, isWallLeft, isFirstTime;
+
+   public Vector3 startPosition;
    
    void Start()
-   {
-       
-       
-       //Cursor.lockState = CursorLockMode.Locked;
-
-       
+   {  
+       Cursor.lockState = CursorLockMode.Locked;
         characterController = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Main Camera");
         cameraRotation = 0.0f;
         isWallRight = false;
         isWallLeft = false;
+        transform.position = startPosition;
    }
 
 
@@ -107,18 +109,32 @@ public class PlayerController : MonoBehaviour
 
 
    void Update()
-   {
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            tip.gameObject.SetActive(false);
+    
+    
+
         isWallRight = Physics.Raycast(transform.position, transform.right, 1.2f, isWall);
         isWallLeft = Physics.Raycast(transform.position, -transform.right, 1.2f, isWall);
         Running();
-   }
+    }
 
    void LateUpdate()
 
    {
+       if (transform.position.y < -100.0f)
+            Die();
         RaycastHit hit;
         Debug.DrawRay(playerCamera.transform.position, transform.forward*10.0f, Color.magenta);
         if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 5))
             Debug.Log(hit.collider.name); 
         }
+    void Die()
+    {
+        transform.position = startPosition;
+
+    } 
+
+        
 } 
