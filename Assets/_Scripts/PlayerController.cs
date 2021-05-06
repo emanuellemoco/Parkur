@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            tip.gameObject .SetActive(false);
+            tip.gameObject.SetActive(false);
     
     
 

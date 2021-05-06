@@ -241,7 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8871b719f8bc96d499b3511b3626d75b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tip: {fileID: 0}
   horizontalJump: 12
   isWall:
     serializedVersion: 2
     m_Bits: 512
+  startPosition: {x: 53.5, y: 10.8, z: 36.5}
