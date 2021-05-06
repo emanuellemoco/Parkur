@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
    {
        
        
-       Cursor.lockState = CursorLockMode.Locked;
+       //Cursor.lockState = CursorLockMode.Locked;
 
        
         characterController = GetComponent<CharacterController>();
@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
    {
         RaycastHit hit;
         Debug.DrawRay(playerCamera.transform.position, transform.forward*10.0f, Color.magenta);
-        if(Physics.Raycast(playerCamera.transform.position, transform.forward, out hit, 100.0f))
-            Debug.Log(hit.collider.name);
+        if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 5))
+            Debug.Log(hit.collider.name); 
         }
 } 

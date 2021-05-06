@@ -15,4 +15,10 @@ public class ButtonLevel : MonoBehaviour
     {
         
     }
+
+    void OnMouseDown(){
+        Debug.Log("uwu");
+        Destroy (this.gameObject); 
+  } 
 }
+ 
