@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
    float _baseSpeed = 10.0f;
    float _gravidade = 4.0f; 
    float maxSpeed = 1f;
-   public Text tip;
+   public GameObject tip;
 
    
    float y = 0;
@@ -111,7 +111,7 @@ public class PlayerController : MonoBehaviour
    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            tip.gameObject.SetActive(false);
+            tip.gameObject .SetActive(false);
     
     
 

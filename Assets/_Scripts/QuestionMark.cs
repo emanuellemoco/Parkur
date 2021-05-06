@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class QuestionMark : MonoBehaviour
 {
 
-    public Text message; 
+    public GameObject tip; 
     
 
     public GameObject player;
@@ -26,7 +26,7 @@ public class QuestionMark : MonoBehaviour
         Debug.Log("QuestionMark");
         // Destroy (this.gameObject);
         if (Vector3.Distance(this.transform.position,player.transform.position) < 7.0f) 
-            message.gameObject.SetActive(true);
+            tip.gameObject.SetActive(true);
 
   } 
 
