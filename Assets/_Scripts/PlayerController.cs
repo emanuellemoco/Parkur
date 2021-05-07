@@ -36,7 +36,8 @@ public class PlayerController : MonoBehaviour
 
 
    private bool isWallRight, isWallLeft, isFirstTime, isMoving;
-   
+
+   private GameManager gm;
 
 
    public Vector3 startPosition;
@@ -50,8 +51,10 @@ public class PlayerController : MonoBehaviour
    public float maxFOV;
    
    void Start()
-   {  
-       Cursor.lockState = CursorLockMode.Locked;
+   {
+
+        gm = GameManager.GetInstance();
+        Cursor.lockState = CursorLockMode.Locked;
         characterController = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Main Camera");
         // cam = GetComponent<Camera>();
@@ -133,7 +136,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0)){
             RaycastHit hit;
             if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 5)){ 
-                Debug.Log(hit.collider.tag);
+                // Debug.Log(hit.collider.tag);
                 if (hit.collider.tag == "Moveable"){ 
                     isMoving = true;
                     moveableOject = hit.collider.gameObject;}
@@ -171,7 +174,13 @@ public class PlayerController : MonoBehaviour
     {
         transform.position = startPosition;
 
-    } 
+    }
 
+    void OnColissionEnter(Collision col){
+        Debug.Log("ENtreei na colisaõ");
+        if (col.collider.tag == "Coin" ){
+            Destroy(col.gameObject);
+            gm.points++;}
+    }
         
 } 
