@@ -11,14 +11,16 @@ public class PlayerController : MonoBehaviour
 {
 
    //Referência usada para a câmera filha do jogador
-   GameObject playerCamera;
+    GameObject playerCamera;    
+   Camera cam;
    //Utilizada para poder travar a rotação no angulo que quisermos.
    float cameraRotation;
    float _baseSpeed = 10.0f;
    float _gravidade = 4.0f; 
    float maxSpeed = 1f;
    public GameObject tip;
-
+   
+   GameObject moveableOject;
    
    float y = 0;
    float x = 0;
@@ -33,18 +35,31 @@ public class PlayerController : MonoBehaviour
    public LayerMask isWall;
 
 
-   private bool isWallRight, isWallLeft, isFirstTime;
+   private bool isWallRight, isWallLeft, isFirstTime, isMoving;
+   
+
 
    public Vector3 startPosition;
+
+    float startingFOV;
+   
+   private float currentFOV;
+
+   public float zoomRate;
+   public float minFOV;
+   public float maxFOV;
    
    void Start()
    {  
        Cursor.lockState = CursorLockMode.Locked;
         characterController = GetComponent<CharacterController>();
         playerCamera = GameObject.Find("Main Camera");
+        // cam = GetComponent<Camera>();
+        // startingFOV = cam.fieldOfView;
         cameraRotation = 0.0f;
         isWallRight = false;
         isWallLeft = false;
+        isMoving = false;
         transform.position = startPosition;
    }
 
@@ -110,10 +125,32 @@ public class PlayerController : MonoBehaviour
 
    void Update()
     {
+        // currentFOV = cam.fieldOfView;
+
         if (Input.GetKeyDown(KeyCode.Escape))
             tip.gameObject.SetActive(false);
+
+        if (Input.GetMouseButtonDown(0)){
+            RaycastHit hit;
+            if(Physics.Raycast(playerCamera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition), out hit, 5)){ 
+                Debug.Log(hit.collider.tag);
+                if (hit.collider.tag == "Moveable"){ 
+                    isMoving = true;
+                    moveableOject = hit.collider.gameObject;}
+                
+                }
+        }
+        if (Input.GetMouseButtonUp(0)){
+            isMoving = false;
+            // currentFOV = startingFOV;
+        }
+        if (isMoving){
+            moveableOject.transform.position = new Vector3(transform.position.x, moveableOject.transform.position.y, transform.position.z +3.0f);
+            // currentFOV -= zoomRate;
+        }
     
-    
+        // currentFOV = Mathf.Clamp(currentFOV,minFOV, maxFOV);
+        // cam.fieldOfView = currentFOV;
 
         isWallRight = Physics.Raycast(transform.position, transform.right, 1.2f, isWall);
         isWallLeft = Physics.Raycast(transform.position, -transform.right, 1.2f, isWall);

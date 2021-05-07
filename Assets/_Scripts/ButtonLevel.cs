@@ -22,8 +22,6 @@ public class ButtonLevel : MonoBehaviour
 
     void OnMouseDown(){
 
-        Debug.Log("uwu");
-        // Destroy (this.gameObject);
         if (Vector3.Distance(this.transform.position,player.transform.position) < 7) 
           Loader.Load(scene);
   } 
